@@ -1,1 +1,0 @@
-module.exports={evalExpr:s=>eval(s)}

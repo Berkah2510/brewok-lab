@@ -1,1 +1,0 @@
-module.exports={evalExpr:s=>/^[-+*/.0-9()]+$/.test(s)?Function('return('+s+')')():NaN}
