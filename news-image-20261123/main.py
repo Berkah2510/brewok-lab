@@ -945,21 +945,23 @@ def main(argv):
         sys.exit(0 if (ok and same) else 1)
 
     cv = render()
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
-    size = write_png(out, cv)
     extra = os.environ.get("MAKEFUN_OUTPUT_DIR")
     if extra:
-        try:
-            os.makedirs(extra, exist_ok=True)
-            write_png(os.path.join(extra, "entry.png"), cv)
-        except OSError:
-            pass
+        target = os.path.join(extra, "entry.png")
     elif os.path.isdir("/output"):
-        try:
-            write_png("/output/entry.png", cv)
-        except OSError:
-            pass
-    print("wrote %s (%d bytes)" % (out, size))
+        target = "/output/entry.png"
+    else:
+        target = None
+    if target is not None:
+        os.makedirs(os.path.dirname(target) or ".", exist_ok=True)
+        size = write_png(target, cv)
+        print("wrote %s (%d bytes)" % (target, size))
+    local = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
+    try:
+        size = write_png(local, cv)
+        print("wrote %s (%d bytes)" % (local, size))
+    except OSError:
+        pass
 
 
 if __name__ == "__main__":
