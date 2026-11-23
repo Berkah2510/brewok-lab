@@ -1,3 +1,6 @@
+// Tiny stack VM: dispatch table T maps each opcode to [immediate bytes, pops, pushes].
+// Data and call stacks are Int32Array; arithmetic wraps at 32 bits.
+// Trap codes are returned and written out as process exit codes.
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
